@@ -17,14 +17,4 @@ export default function configHandler(
 		jsxFragment: "UI.Fragment",
 		jsxImportSource: "reverui",
 	};
-	config.resolve = {
-		...config.resolve,
-		alias: {
-			...config.resolve?.alias,
-			"@UI": "/internal/UI.ts",
-			"@UIElements": "/internal/UIElements.tsx",
-			"@UIFunctions": "/internal/UIFunctions.ts",
-			"@UIFunctions_internal": "/internal/UIFunctions_internal.ts",
-		},
-	};
 }

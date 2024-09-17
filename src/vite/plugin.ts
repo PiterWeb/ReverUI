@@ -2,7 +2,6 @@ import type { PluginOption } from "vite";
 import {
 	getJSXElementName,
 	replaceSpecialFunctions,
-	replaceImport,
 	replaceSignalHTMLElement,
 	replaceCustomHooks,
 } from "./transform";
@@ -15,7 +14,7 @@ export default {
 
 		if (id.endsWith("ts") || id.endsWith("js")) {
 			let newCode =  replaceCustomHooks(code);
-			newCode = replaceImport(newCode);
+			// newCode = replaceImport(newCode);
 			// console.log(newCode);
 			return {
 				code: newCode,
@@ -27,7 +26,7 @@ export default {
 
 		const name = getJSXElementName(code);
 		let newCode = replaceSpecialFunctions(code, name);
-		newCode = replaceImport(newCode);
+		// newCode = replaceImport(newCode);
 		// console.log(newCode);
 		newCode = replaceSignalHTMLElement(newCode);
 

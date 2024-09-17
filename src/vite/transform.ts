@@ -1,10 +1,10 @@
 import { UIGenerateId } from "../utils/id";
 
-export function replaceImport(code: string) {
-	const regex = /import\s*([^+]*)\s*from\s*"@UIFunctions"/g;
+// export function replaceImport(code: string) {
+// 	const regex = /import\s*([^+]*)\s*from\s*"@UIFunctions"/g;
 
-	return code.replace(regex, `import $1 from "@UIFunctions_internal"`);
-}
+// 	return code.replace(regex, `import $1 from "@UIFunctions_internal"`);
+// }
 
 export function replaceSignalHTMLElement(code: string) {
 	// const regex = /UI.createElement\s*\(\s*("[^]")\s*,\s*{([^]*)}\s*,\s*(\w+).value\)/g;
