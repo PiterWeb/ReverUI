@@ -5,6 +5,11 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "homepage": "https://rever-ui.vercel.app/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PiterWeb/ReverUI.git"
+  },
   "files": [
     "dist"
   ],
