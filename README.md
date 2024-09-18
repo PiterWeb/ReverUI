@@ -57,14 +57,14 @@ This are the features that Vite provides:
 -   useEffect:
 
     ```tsx
-    import { $useEffect } from "reverui";
+    import { $useEffect, $useSignal } from "reverui";
 
     export default function StateFullApp() {
         $useEffect(() => {
             console.log("Mounted");
         });
 
-        const counter = useSignal(0);
+        const counter = $useSignal(0);
 
         $useEffect(() => {
             console.log("Counter value changed to " + counter.value);
@@ -85,8 +85,8 @@ This are the features that Vite provides:
             console.log("Mounted");
         });
 
-        const counter = useSignal(0);
-        // const signal = useSignal(initialValue);
+        const counter = $useSignal(0);
+        // const signal = $useSignal(initialValue);
 
         // UseEffect with dependencies will be called only when the dependencies change
         $useEffect(() => {
