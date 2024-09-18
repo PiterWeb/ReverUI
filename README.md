@@ -1,8 +1,11 @@
-# ReverUI 
+# ReverUI
+
 Effortless UI, Powerful Simplicity
 
 #### 🔥 Simpler than React 👀
+
 #### 🔑 TS Native 🔐
+
 #### ❌ No Virtual DOM 📦
 
 ### Current functionality:
@@ -34,13 +37,15 @@ This are the features that Vite provides:
 
 ### Try it yourself:
 
+There is a prepared [Vite template](https://github.com/PiterWeb/ViteReverUITemplate) ready to use that includes examples & TailwindCSS configured by default
+
 #### Steps:
 
--   Clone the repository: `git clone https://github.com/PiterWeb/ReactiveUI.git`
+-   Clone the repository: `git clone https://github.com/PiterWeb/ViteReverUITemplate.git`
 -   Open the folder & install the dependencies: `npm install`
 -   Run the development enviroment: `npm run dev`
 
-#### Examples:
+#### More Examples:
 
 -   useSignal:
 
@@ -48,9 +53,9 @@ This are the features that Vite provides:
     import { $useSignal } from "reverui";
 
     export default function StateFullApp() {
-        const mySignal = $useSignal("initValue");
+    	const mySignal = $useSignal("initValue");
 
-        return <div>...</div>;
+    	return <div>...</div>;
     }
     ```
 
@@ -60,17 +65,17 @@ This are the features that Vite provides:
     import { $useEffect, $useSignal } from "reverui";
 
     export default function StateFullApp() {
-        $useEffect(() => {
-            console.log("Mounted");
-        });
+    	$useEffect(() => {
+    		console.log("Mounted");
+    	});
 
-        const counter = $useSignal(0);
+    	const counter = $useSignal(0);
 
-        $useEffect(() => {
-            console.log("Counter value changed to " + counter.value);
-        }, [counter]);
+    	$useEffect(() => {
+    		console.log("Counter value changed to " + counter.value);
+    	}, [counter]);
 
-        return <div>...</div>;
+    	return <div>...</div>;
     }
     ```
 
@@ -80,30 +85,30 @@ This are the features that Vite provides:
     import { $useSignal, $useEffect } from "reverui";
 
     export default function StateFullApp() {
-        // UseEffect with no dependencies before useState will be called only on mount
-        $useEffect(() => {
-            console.log("Mounted");
-        });
+    	// UseEffect with no dependencies before useState will be called only on mount
+    	$useEffect(() => {
+    		console.log("Mounted");
+    	});
 
-        const counter = $useSignal(0);
-        // const signal = $useSignal(initialValue);
+    	const counter = $useSignal(0);
+    	// const signal = $useSignal(initialValue);
 
-        // UseEffect with dependencies will be called only when the dependencies change
-        $useEffect(() => {
-            console.log("Counter value changed to " + counter.value);
-        }, [counter]);
+    	// UseEffect with dependencies will be called only when the dependencies change
+    	$useEffect(() => {
+    		console.log("Counter value changed to " + counter.value);
+    	}, [counter]);
 
-        return (
-            <div>
-                <h1>Stateful Component</h1>
-                <p>
-                    {" "}
-                    Counter: {counter.value === 0
-                        ? "You didn't click"
-                        : counter.value}{" "}
-                </p>
-                <button onclick={() => counter.value++}>Increment</button>
-            </div>
-        );
+    	return (
+    		<div>
+    			<h1>Stateful Component</h1>
+    			<p>
+    				{" "}
+    				Counter: {counter.value === 0
+    					? "You didn't click"
+    					: counter.value}{" "}
+    			</p>
+    			<button onclick={() => counter.value++}>Increment</button>
+    		</div>
+    	);
     }
     ```
