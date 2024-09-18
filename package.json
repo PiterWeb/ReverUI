@@ -1,6 +1,6 @@
 {
   "name": "reverui",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Effortless UI, Powerful Simplicity",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -11,7 +11,8 @@
     "url": "git+https://github.com/PiterWeb/ReverUI.git"
   },
   "files": [
-    "dist"
+    "dist",
+    "tsconfig.json"
   ],
   "scripts": {
     "build": "tsup",
