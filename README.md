@@ -1,12 +1,11 @@
-# ReverUI (A try to implement a similar but more enjoyable React library without VDOM)
-
-## Experimental ⚠️
+# ReverUI 
+Effortless UI, Powerful Simplicity
 
 #### 🔥 Simpler than React 👀
 #### 🔑 TS Native 🔐
 #### ❌ No Virtual DOM 📦
 
-## Current functionality:
+### Current functionality:
 
 -   [x] React-like JSX
 -   [x] useSignal ♻
@@ -33,15 +32,15 @@ This are the features that Vite provides:
 -   Support for CSS Preprocessors
 -   Transpiler
 
-## Try it yourself:
+### Try it yourself:
 
-### Steps:
+#### Steps:
 
 -   Clone the repository: `git clone https://github.com/PiterWeb/ReactiveUI.git`
 -   Open the folder & install the dependencies: `npm install`
 -   Run the development enviroment: `npm run dev`
 
-## Examples:
+#### Examples:
 
 -   useSignal:
 
