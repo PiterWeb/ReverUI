@@ -15,14 +15,14 @@ Effortless UI, Powerful Simplicity
 -   [x] Good intellisense
 -   [x] useEffect (state changes & mounted)
 -   [x] Fragments (<> </>) (only work without state)
--   [x] Custom Hooks (must start with "use")
+-   [x] Custom Hooks (must start with "$use")
 -   [x] Conditional Rendering (ternary operator) ❓
 -   [x] List Rendering (array.map) 📜
 -   [x] Event Handling (all events in lowercase) <kbd>Click</kbd> <kbd>Key</kbd> ...
 -   [x] TailwindCSS ✨
--   [x] Reusable Components on JSX (But cannot be stateful) 📦
--   [ ] Same Statefull Component on the same parent
--   [x] Selective(Smart) Re-rendering 🧠
+-   [x] Reusable Components 📦
+-   [x] Same Statefull Component on the same parent
+-   [x] Smart Re-rendering 🧠
 
 **The project is built on top of Vite**
 
@@ -47,7 +47,7 @@ There is a prepared [Vite template](https://github.com/PiterWeb/ViteReverUITempl
 
 #### More Examples:
 
--   useSignal:
+-   $useSignal:
 
     ```tsx
     import { $useSignal } from "reverui";
@@ -59,7 +59,7 @@ There is a prepared [Vite template](https://github.com/PiterWeb/ViteReverUITempl
     }
     ```
 
--   useEffect:
+-   $useEffect:
 
     ```tsx
     import { $useEffect, $useSignal } from "reverui";
