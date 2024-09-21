@@ -67,8 +67,8 @@ export function replaceSpecialFunctions(code: string, name: string) {
 	// useSignal
 	// Add id to useSignal
 	newCode = newCode.replaceAll(
-		/(\w+)\s*=\s*\$useSignal\s*\(([^)]*)\)\s*/g,
-		`$1 = \$useSignal($2, "$1-${id}");`
+		/(\w+)\s*=\s*\$useSignal__internal\s*\(([^)]*)\)\s*/g,
+		`$1 = \$useSignal__internal($2, "$1-${id}");`
 	);
 
 	// Add parent name to all use<Name>() functions [customHooks, useSignal, useEffect]

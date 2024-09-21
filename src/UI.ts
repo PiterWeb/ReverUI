@@ -1,16 +1,16 @@
 import StateStore from "./StateStore";
 import { UIGenerateId } from "./utils/id";
 
-interface UIElementArgs {
-	[key: string]: any;
-	this?: UIComponentClass;
-}
+type UIElementArgs = Record<string, any>;
 
 type children =
 	| (string | number | boolean | HTMLElement)[]
 	| (string | number | boolean | HTMLElement)[][];
 
-export type UIComponent = (args?: UIElementArgs) => HTMLElement;
+export type UIComponent<T extends Record<string, unknown> = UIElementArgs> = (
+	args: T
+) => HTMLElement;
+
 export class UIComponentClass {
 	__id__ = UIGenerateId();
 	__state__ = new StateStore();
@@ -22,11 +22,26 @@ export class UIComponentClass {
 	}
 
 	render(args?: UIElementArgs) {
-		const element = this.elementFn(args);
+		const element = this.elementFn(args ?? {});
 		UI.setId(element, this.__id__);
 		return element;
 	}
 }
+
+export const $Component = <
+	T extends UIComponent<P>,
+	P extends Record<string, unknown>
+>({
+	fn,
+	ref,
+	props,
+}: {
+	fn: T;
+	props?: P;
+	ref: UIComponentClass;
+}) => {
+	return fn.bind(ref)(props ?? ({} as P));
+};
 
 export function $UI(component: UIComponent, parent?: HTMLElement | null) {
 	UI.HandleStateFull(component as UIComponent, parent);
@@ -34,7 +49,7 @@ export function $UI(component: UIComponent, parent?: HTMLElement | null) {
 
 export default class UI {
 	public static renderString(elementFun: UIComponent): string {
-		return elementFun().outerHTML;
+		return elementFun({}).outerHTML;
 	}
 
 	public static createElement(
@@ -49,7 +64,6 @@ export default class UI {
 
 			const el = component.render(opts);
 			UI.createChilds(el, children);
-			UI.setId(el, component.__id__);
 
 			return el;
 		}
@@ -81,7 +95,7 @@ export default class UI {
 		UI.createChilds(el, children);
 
 		return el;
-	};
+	}
 
 	private static createChilds(parent: HTMLElement, children: children) {
 		for (const child of children) {

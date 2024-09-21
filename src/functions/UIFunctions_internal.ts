@@ -17,7 +17,7 @@ export function $useSignal<T>(
 	let value = initvalue;
 	let state = el.__state__;
 
-	const keyState = `state-${id}`;
+	const keyState = `state-${id}-${el.__id__}`;
 	const lastKeyState = `last-${keyState}`;
 
 	if (state === undefined) {
@@ -29,6 +29,7 @@ export function $useSignal<T>(
 	} else value = state.getProp(keyState);
 
 	const setState = (newValue: T) => {
+		console.log(keyState)
 		state.setProp(lastKeyState, value);
 		state.setProp(keyState, newValue);
 
@@ -70,7 +71,7 @@ export function $useEffect(
 	if (dependencies !== undefined && state !== undefined) {
 		dependencies.forEach((dependency) => {
 			if (typeof dependency === "string") {
-				const keyState = `state-${dependency}`;
+				const keyState = `state-${dependency}-${el.__id__}`;
 				const lastKeyState = `last-${keyState}`;
 
 				const value = state.getProp(keyState);
@@ -82,7 +83,7 @@ export function $useEffect(
 				return;
 			}
 
-			const keyState = `state-${dependency.id}`;
+			const keyState = `state-${dependency.id}-${el.__id__}`;
 			const lastKeyState = `last-${keyState}`;
 
 			const value = state.getProp(keyState);
