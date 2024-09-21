@@ -1,6 +1,5 @@
 import type { PluginOption } from "vite";
 import {
-	getJSXElementName,
 	replaceSpecialFunctions,
 	replaceSignalHTMLElement,
 	replaceCustomHooks,
@@ -24,8 +23,8 @@ export default {
 
 		if (!id.endsWith("tsx") && !id.endsWith("jsx")) return;
 
-		const name = getJSXElementName(code);
-		let newCode = replaceSpecialFunctions(code, name);
+		// const name = getJSXElementName(code);
+		let newCode = replaceSpecialFunctions(code, "this");
 		// newCode = replaceImport(newCode);
 		// console.log(newCode);
 		newCode = replaceSignalHTMLElement(newCode);

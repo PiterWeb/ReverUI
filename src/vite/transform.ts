@@ -9,7 +9,7 @@ import { UIGenerateId } from "../utils/id";
 export function replaceSignalHTMLElement(code: string) {
 	// const regex = /UI.createElement\s*\(\s*("[^]")\s*,\s*{([^]*)}\s*,\s*(\w+).value\)/g;
 	// Replace the createElement with the new one (if has parameters)
-	let regex =
+	const regex =
 		/UI.createElement\s*\(\s*?("[^*]*")\s*,\s*{([^*]*)\s*},\s*(\w+).value\s*/g;
 
 	let newCode = code.replaceAll(
@@ -80,8 +80,8 @@ export function replaceSpecialFunctions(code: string, name: string) {
 	return newCode;
 }
 
-export function getJSXElementName(code: string) {
-	const match = code.match(/export\s+default\s+function\s+(\w+)\(.*\)/i);
-	if (!match) return "";
-	return match[1];
-}
+// export function getJSXElementName(code: string) {
+// 	const match = code.match(/export\s+default\s+function\s+(\w+)\(.*\)/i);
+// 	if (!match) return "";
+// 	return match[1];
+// }

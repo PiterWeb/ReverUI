@@ -1,25 +1,35 @@
 import StateStore from "./StateStore";
 import { UIGenerateId } from "./utils/id";
 
-interface createElementOptions {
+interface UIElementArgs {
 	[key: string]: any;
+	this?: UIComponentClass;
 }
-
-export class UIElementProto {
-	prototype = {
-		__id__: "",
-		__state__: new StateStore(),
-	};
-}
-
-export type UIComponent = () => HTMLElement;
 
 type children =
 	| (string | number | boolean | HTMLElement)[]
 	| (string | number | boolean | HTMLElement)[][];
 
+export type UIComponent = (args?: UIElementArgs) => HTMLElement;
+export class UIComponentClass {
+	__id__ = UIGenerateId();
+	__state__ = new StateStore();
+
+	private elementFn: UIComponent;
+
+	constructor(elementFn: UIComponent) {
+		this.elementFn = elementFn;
+	}
+
+	render(args?: UIElementArgs) {
+		const element = this.elementFn(args);
+		UI.setId(element, this.__id__);
+		return element;
+	}
+}
+
 export function $UI(component: UIComponent, parent?: HTMLElement | null) {
-	UI.HandleStateFull(component as UIComponent & UIElementProto, parent);
+	UI.HandleStateFull(component as UIComponent, parent);
 }
 
 export default class UI {
@@ -28,13 +38,19 @@ export default class UI {
 	}
 
 	public static createElement(
-		tagName: string | (() => HTMLElement),
-		opts?: createElementOptions,
+		tagName: string | UIComponent,
+		opts?: UIElementArgs,
 		...children: children
 	): HTMLElement {
+		// Component
 		if (typeof tagName === "function") {
-			const el = tagName();
-			this.createChilds(el, children);
+			console.log(this, opts);
+			const component = new UIComponentClass(tagName);
+
+			const el = component.render(opts);
+			UI.createChilds(el, children);
+			UI.setId(el, component.__id__);
+
 			return el;
 		}
 
@@ -62,10 +78,10 @@ export default class UI {
 			}
 		}
 
-		this.createChilds(el, children);
+		UI.createChilds(el, children);
 
 		return el;
-	}
+	};
 
 	private static createChilds(parent: HTMLElement, children: children) {
 		for (const child of children) {
@@ -213,38 +229,32 @@ export default class UI {
 	}
 
 	public static HandleStateFull(
-		elementFun: UIComponent & UIElementProto,
+		elementFun: UIComponent,
 		parent?: HTMLElement | null
 	) {
-		const id = UIGenerateId();
+		const component = new UIComponentClass(elementFun);
+		const id = component.__id__;
 
-		elementFun.prototype.__id__ = id;
+		let actualElement = component.render();
 
-		let actualElement = elementFun();
-
-		this.setId(actualElement, id);
-
-		if (!parent) parent = document.body 
+		if (!parent) parent = document.body;
 
 		parent.appendChild(actualElement);
 
-		if (elementFun.prototype.__state__ === undefined) return;
+		if (component.__state__ === undefined) return;
 
-		elementFun.prototype.__state__.addListener(
-			`el-${id}`,
-			(newElement: HTMLElement) => {
-				if (this.getId(newElement) !== id) return;
+		component.__state__.addListener("el", (newElement: HTMLElement) => {
+			if (this.getId(newElement) !== id) return;
 
-				this.handleFragmentRerender(parent, newElement, id);
+			this.handleFragmentRerender(parent, newElement, id);
 
-				if (!(newElement instanceof DocumentFragment)) {
-					this.smartRerender(parent, actualElement, newElement);
-				}
-
-				//@ts-ignore
-				actualElement = newElement;
+			if (!(newElement instanceof DocumentFragment)) {
+				this.smartRerender(parent, actualElement, newElement);
 			}
-		);
+
+			//@ts-ignore
+			actualElement = newElement;
+		});
 	}
 
 	public static HandleStateLess(

@@ -1,7 +1,6 @@
 import StateStore from "../StateStore";
 import deepEqual from "../utils/deep_equal";
-import { UIElementProto, UIComponent } from "../UI";
-import UI from "../UI";
+import { UIComponentClass } from "../UI";
 
 export interface Signal<t> {
 	value: t;
@@ -11,22 +10,19 @@ export interface Signal<t> {
 }
 
 export function $useSignal<T>(
-	el: UIComponent & UIElementProto,
+	el: UIComponentClass,
 	initvalue: T,
 	id: string
 ): Signal<T> {
 	let value = initvalue;
-	let state = el.prototype.__state__;
-	let elId =  el.prototype.__id__;
+	let state = el.__state__;
 
-	console.log(el.prototype.__state__);
-
-	const keyState = `state-${id}-${elId}`;
+	const keyState = `state-${id}`;
 	const lastKeyState = `last-${keyState}`;
 
 	if (state === undefined) {
-		el.prototype.__state__ = new StateStore();
-		state = el.prototype.__state__;
+		el.__state__ = new StateStore();
+		state = el.__state__;
 		state.setProp(keyState, value);
 	} else if (state.getProp(keyState) === undefined) {
 		state.setProp(keyState, value);
@@ -37,9 +33,9 @@ export function $useSignal<T>(
 		state.setProp(keyState, newValue);
 
 		// Trigger re-render
-		const newRender = el();
-		UI.setId(newRender, elId);
-		state.setProp(`el-${elId}`, newRender);
+		const newRender = el.render();
+
+		state.setProp("el", newRender);
 	};
 
 	return {
@@ -62,23 +58,19 @@ export function $useSignal<T>(
 }
 
 export function $useEffect(
-	el: UIComponent & UIElementProto,
+	el: UIComponentClass,
 	callback: () => void,
 	dependencies?: Signal<unknown>[] | string[]
 ) {
-
-	let elId =  el.prototype.__id__;
-
-	if (dependencies === undefined && el.prototype.__state__ === undefined) {
+	const state = el.__state__ as StateStore | undefined;
+	if (dependencies === undefined && state === undefined) {
 		return callback();
 	}
 
-	if (dependencies !== undefined && el.prototype.__state__ !== undefined) {
-		const state = el.prototype.__state__ as StateStore;
-
+	if (dependencies !== undefined && state !== undefined) {
 		dependencies.forEach((dependency) => {
 			if (typeof dependency === "string") {
-				const keyState = `state-${dependency}-${elId}`;
+				const keyState = `state-${dependency}`;
 				const lastKeyState = `last-${keyState}`;
 
 				const value = state.getProp(keyState);
@@ -90,7 +82,7 @@ export function $useEffect(
 				return;
 			}
 
-			const keyState = `state-${dependency.id}-${elId}`;
+			const keyState = `state-${dependency.id}`;
 			const lastKeyState = `last-${keyState}`;
 
 			const value = state.getProp(keyState);
