@@ -29,7 +29,6 @@ export function $useSignal<T>(
 	} else value = state.getProp(keyState);
 
 	const setState = (newValue: T) => {
-		console.log(keyState)
 		state.setProp(lastKeyState, value);
 		state.setProp(keyState, newValue);
 

@@ -32,15 +32,15 @@ export const $Component = <
 	T extends UIComponent<P>,
 	P extends Record<string, unknown>
 >({
-	fn,
+	element,
 	ref,
 	props,
 }: {
-	fn: T;
+	element: T;
 	props?: P;
 	ref: UIComponentClass;
 }) => {
-	return fn.bind(ref)(props ?? ({} as P));
+	return element.bind(ref)(props ?? ({} as P));
 };
 
 export function $UI(component: UIComponent, parent?: HTMLElement | null) {
@@ -59,9 +59,8 @@ export default class UI {
 	): HTMLElement {
 		// Component
 		if (typeof tagName === "function") {
-			console.log(this, opts);
+			
 			const component = new UIComponentClass(tagName);
-
 			const el = component.render(opts);
 			UI.createChilds(el, children);
 
