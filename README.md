@@ -15,14 +15,14 @@ Effortless UI, Powerful Simplicity
 -   [x] Good intellisense
 -   [x] useEffect (state changes & mounted)
 -   [x] Fragments (<> </>) (only work without state)
--   [x] Custom Hooks (must start with "use")
+-   [x] Custom Hooks (must start with "$use")
 -   [x] Conditional Rendering (ternary operator) ❓
 -   [x] List Rendering (array.map) 📜
 -   [x] Event Handling (all events in lowercase) <kbd>Click</kbd> <kbd>Key</kbd> ...
 -   [x] TailwindCSS ✨
--   [x] Reusable Components on JSX (But cannot be stateful) 📦
--   [ ] Same Statefull Component on the same parent
--   [x] Selective(Smart) Re-rendering 🧠
+-   [x] Reusable Components 📦
+-   [x] Same Statefull Component on the same parent
+-   [x] Smart Re-rendering 🧠
 
 **The project is built on top of Vite**
 
@@ -47,7 +47,7 @@ There is a prepared [Vite template](https://github.com/PiterWeb/ViteReverUITempl
 
 #### More Examples:
 
--   useSignal:
+-   $useSignal:
 
     ```tsx
     import { $useSignal } from "reverui";
@@ -59,7 +59,7 @@ There is a prepared [Vite template](https://github.com/PiterWeb/ViteReverUITempl
     }
     ```
 
--   useEffect:
+-   $useEffect:
 
     ```tsx
     import { $useEffect, $useSignal } from "reverui";
@@ -85,7 +85,7 @@ There is a prepared [Vite template](https://github.com/PiterWeb/ViteReverUITempl
     import { $useSignal, $useEffect } from "reverui";
 
     export default function StateFullApp() {
-    	// UseEffect with no dependencies before useState will be called only on mount
+    	// UseEffect with no dependencies before $useSignal will be called only on mount
     	$useEffect(() => {
     		console.log("Mounted");
     	});
@@ -93,7 +93,7 @@ There is a prepared [Vite template](https://github.com/PiterWeb/ViteReverUITempl
     	const counter = $useSignal(0);
     	// const signal = $useSignal(initialValue);
 
-    	// UseEffect with dependencies will be called only when the dependencies change
+    	// $useEffect with dependencies will be called only when the dependencies change
     	$useEffect(() => {
     		console.log("Counter value changed to " + counter.value);
     	}, [counter]);
