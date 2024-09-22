@@ -85,7 +85,7 @@ There is a prepared [Vite template](https://github.com/PiterWeb/ViteReverUITempl
     import { $useSignal, $useEffect } from "reverui";
 
     export default function StateFullApp() {
-    	// UseEffect with no dependencies before useState will be called only on mount
+    	// UseEffect with no dependencies before $useSignal will be called only on mount
     	$useEffect(() => {
     		console.log("Mounted");
     	});
@@ -93,7 +93,7 @@ There is a prepared [Vite template](https://github.com/PiterWeb/ViteReverUITempl
     	const counter = $useSignal(0);
     	// const signal = $useSignal(initialValue);
 
-    	// UseEffect with dependencies will be called only when the dependencies change
+    	// $useEffect with dependencies will be called only when the dependencies change
     	$useEffect(() => {
     		console.log("Counter value changed to " + counter.value);
     	}, [counter]);
