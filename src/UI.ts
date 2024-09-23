@@ -1,7 +1,8 @@
 import StateStore from "./StateStore";
-import { UIGenerateId } from "./utils/id";
+import { IDGenerator } from "./utils/id";
 
 type UIElementArgs = Record<string, any>;
+
 
 type children =
 	| (string | number | boolean | HTMLElement)[]
@@ -12,7 +13,10 @@ export type UIComponent<T extends Record<string, unknown> = UIElementArgs> = (
 ) => HTMLElement;
 
 export class UIComponentClass {
-	__id__ = UIGenerateId();
+
+	static IDGenerator = new IDGenerator()
+
+	__id__ = UIComponentClass.IDGenerator.generate();
 	__state__: StateStore = new StateStore();
 
 	private elementFn: UIComponent;
@@ -27,21 +31,6 @@ export class UIComponentClass {
 		return element;
 	}
 }
-
-export const $Component = <
-	T extends UIComponent<P>,
-	P extends Record<string, unknown>
->({
-	element,
-	ref,
-	props,
-}: {
-	element: T;
-	props?: P;
-	ref: UIComponentClass;
-}) => {
-	return element.bind(ref)(props ?? ({} as P));
-};
 
 export function $UI(component: UIComponent, parent?: HTMLElement | null) {
 	UI.HandleStateFull(component as UIComponent, parent);
@@ -59,7 +48,6 @@ export default class UI {
 	): HTMLElement {
 		// Component
 		if (typeof tagName === "function") {
-			
 			const component = new UIComponentClass(tagName);
 			const el = component.render(opts);
 			UI.createChilds(el, children);
@@ -70,7 +58,7 @@ export default class UI {
 		let el = document.createElement(tagName);
 
 		if (tagName === "Fragment")
-			el = document.createDocumentFragment() as unknown as HTMLElement;
+			el = new DocumentFragment() as unknown as HTMLElement;
 
 		if (opts) {
 			const keys = Object.keys(opts);
@@ -86,8 +74,6 @@ export default class UI {
 					key != "className"
 				)
 					el.setAttribute(key, opts[key]);
-
-				// if (key.startsWith("data-")) el.setAttribute(key, opts[key]);
 			}
 		}
 
@@ -97,6 +83,7 @@ export default class UI {
 	}
 
 	private static createChilds(parent: HTMLElement, children: children) {
+		if (parent === null) return;
 		for (const child of children) {
 			if (typeof child === "string")
 				parent.appendChild(document.createTextNode(child));
@@ -104,24 +91,19 @@ export default class UI {
 			if (typeof child === "number" || typeof child === "boolean")
 				parent.appendChild(document.createTextNode(child.toString()));
 
-			if (child instanceof HTMLElement) {
-				parent.appendChild(child);
-			}
+			if (child instanceof HTMLElement) parent.appendChild(child);
 
-			if (child instanceof DocumentFragment) {
-				parent.appendChild(child);
-			}
+			if (child instanceof DocumentFragment) parent.appendChild(child);
 
 			// {array.map((el) => {return <div>{el}</div>})
-			if (child instanceof Array) {
-				this.createChilds(parent, child);
-			}
+			if (child instanceof Array) this.createChilds(parent, child);
 		}
 	}
 
 	public static Fragment = "Fragment";
 
 	static setId(el: HTMLElement, id: string) {
+		if (el === null) return;
 		if (el instanceof DocumentFragment) return;
 		el.setAttribute("data-fr-id", id);
 

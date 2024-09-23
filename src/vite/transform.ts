@@ -1,13 +1,18 @@
-import { UIGenerateId } from "../utils/id";
+import { IDGenerator } from "../utils/id";
+
+const INTERNAL_IDGenerator = new IDGenerator();
 
 export function replaceSignalHTMLElement(code: string) {
-
 	const regex =
 		/UI.createElement\s*\(\s*?("[^*]*")\s*,\s*{([^*]*)\s*},\s*(\w+).value\s*/g;
 
+	const uid = INTERNAL_IDGenerator.generate();
+
 	let newCode = code.replaceAll(
 		regex,
-		`UI.createElement($1, {$2, ["data-rui-"+$3.id]: $3.lastValueStringified, "uid": "${UIGenerateId()}"}, $3.value`
+		(_, tagName, options, signal) => {
+			return `UI.createElement(${tagName}, {${options}, ["data-rui-"+${signal}.id]: ${signal}.lastValueStringified, "uid": "${uid}"}, ${signal}.value`
+		}
 	);
 
 	return newCode;
@@ -26,26 +31,28 @@ export function replaceCustomHooks(code: string) {
 export function replaceSpecialFunctions(code: string, name: string) {
 	let newCode = code;
 
-	const id = UIGenerateId();
-
 	newCode = newCode.replaceAll("$useSignal", "$useSignal__internal");
 	newCode = newCode.replaceAll("$useEffect", "$useEffect__internal");
 
 	// useSignal
 	// Add id to useSignal
-	newCode = newCode.replaceAll(
-		/(\w+)\s*=\s*\$useSignal__internal\s*\(([^)]*)\)\s*/g,
-		`$1 = \$useSignal__internal($2, "$1-${id}");`
-	);
+	const $useSignalSearchRegex =
+		/(\w+)\s*=\s*\$useSignal__internal\s*\(([^)]*)\)\s*/g;
+
+	newCode = newCode.replaceAll($useSignalSearchRegex, (_, name, initiValue) => {
+		const id = INTERNAL_IDGenerator.generate();
+		return `${name} = \$useSignal__internal(${initiValue}, "${name}-${id}");`;
+	});
 
 	// useEffect
 	// Add id to useEffect
 	const $useEffectSearchRegex =
 		/\$useEffect__internal\s*\((\s*\(\s*[^]*?\s*\)\s*[^]*?\s*\])\s*\)\s*/g;
 
-	newCode = newCode.replaceAll($useEffectSearchRegex, (_, match) => {
+	newCode = newCode.replaceAll($useEffectSearchRegex, (_, content) => {
 		// Uses a new UIGeneratedId for every effect
-		return `$useEffect__internal(${match}, "${UIGenerateId()}")`;
+		const id = INTERNAL_IDGenerator.generate();
+		return `$useEffect__internal(${content}, "${id}")`;
 	});
 
 	// Add parent name to all use<Name>() functions [customHooks, useSignal, useEffect]
