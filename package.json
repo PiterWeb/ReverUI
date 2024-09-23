@@ -1,6 +1,6 @@
 {
   "name": "reverui",
-  "version": "0.2.1",
+  "version": "0.2.5",
   "description": "Effortless UI, Powerful Simplicity",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
