@@ -22,7 +22,9 @@
     "react",
     "ui",
     "preact",
-    "reactivity"
+    "reactivity",
+    "reverui",
+    "rever"
   ],
   "author": "PiterWeb",
   "license": "ISC",

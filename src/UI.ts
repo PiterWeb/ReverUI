@@ -13,7 +13,7 @@ export type UIComponent<T extends Record<string, unknown> = UIElementArgs> = (
 
 export class UIComponentClass {
 	__id__ = UIGenerateId();
-	__state__ = new StateStore();
+	__state__: StateStore = new StateStore();
 
 	private elementFn: UIComponent;
 
@@ -253,8 +253,6 @@ export default class UI {
 		if (!parent) parent = document.body;
 
 		parent.appendChild(actualElement);
-
-		if (component.__state__ === undefined) return;
 
 		component.__state__.addListener("el", (newElement: HTMLElement) => {
 			if (this.getId(newElement) !== id) return;

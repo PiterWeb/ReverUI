@@ -54,15 +54,8 @@ export function replaceSpecialFunctions(code: string, name: string) {
 
 	const id = UIGenerateId();
 
-	newCode = newCode.replaceAll(
-		"$useSignal",
-		"$useSignal__internal"
-	)
-
-	newCode = newCode.replaceAll(
-		"$useEffect",
-		"$useEffect__internal"
-	)
+	newCode = newCode.replaceAll("$useSignal", "$useSignal__internal");
+	newCode = newCode.replaceAll("$useEffect", "$useEffect__internal");
 
 	// useSignal
 	// Add id to useSignal
@@ -70,6 +63,14 @@ export function replaceSpecialFunctions(code: string, name: string) {
 		/(\w+)\s*=\s*\$useSignal__internal\s*\(([^)]*)\)\s*/g,
 		`$1 = \$useSignal__internal($2, "$1-${id}");`
 	);
+
+	const $useEffectSearchRegex =
+		/\$useEffect__internal\s*\((\s*\(\s*[^]*?\s*\)\s*[^]*?\s*\])\s*\)\s*/g;
+
+	newCode = newCode.replaceAll($useEffectSearchRegex, (_, match) => {
+		// Uses a new UIGeneratedId for every effect
+		return `$useEffect__internal(${match}, "${UIGenerateId()}")`;
+	});
 
 	// Add parent name to all use<Name>() functions [customHooks, useSignal, useEffect]
 	newCode = newCode.replaceAll(

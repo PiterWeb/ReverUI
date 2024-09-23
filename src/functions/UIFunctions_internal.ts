@@ -60,37 +60,30 @@ export function $useSignal<T>(
 export function $useEffect(
 	el: UIComponentClass,
 	callback: () => void,
-	dependencies?: Signal<unknown>[] | string[]
+	dependencies: Signal<unknown>[],
+	id: string
 ) {
-	const state = el.__state__ as StateStore | undefined;
-	if (dependencies === undefined && state === undefined) {
-		return callback();
-	}
+	const state = el.__state__;
 
-	if (dependencies !== undefined && state !== undefined) {
-		dependencies.forEach((dependency) => {
-			if (typeof dependency === "string") {
-				const keyState = `state-${dependency}-${el.__id__}`;
-				const lastKeyState = `last-${keyState}`;
+	const initialized = state.getProp(`effect-${id}`) !== undefined;
 
-				const value = state.getProp(keyState);
-				const lastValue = state.getProp(lastKeyState);
+	if (initialized) return;
 
-				if (value === lastValue) return;
+	// Set initialized as true
+	state.setProp(`effect-${id}`, true)
 
-				callback();
-				return;
-			}
+	if (dependencies.length == 0) return callback();
 
-			const keyState = `state-${dependency.id}-${el.__id__}`;
-			const lastKeyState = `last-${keyState}`;
+	dependencies.forEach((dependency) => {
+		const keyState = `state-${dependency.id}-${el.__id__}`;
+		const lastKeyState = `last-${keyState}`;
 
-			const value = state.getProp(keyState);
+		state.addListener(keyState, (newValue) => {
 			const lastValue = state.getProp(lastKeyState);
 
-			if (value === lastValue) return;
+			if (newValue === lastValue) return;
 
 			callback();
 		});
-	}
+	});
 }

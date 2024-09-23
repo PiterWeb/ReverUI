@@ -7,5 +7,5 @@ export function $useSignal<T>(_initvalue: T) {
 }
 export function $useEffect(
 	_callback: () => void,
-	_dependencies?: Signal<unknown>[] | string[]
+	_dependencies: Signal<unknown>[]
 ) {}
