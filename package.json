@@ -1,6 +1,6 @@
 {
   "name": "reverui",
-  "version": "0.2.6",
+  "version": "0.2.5",
   "description": "Effortless UI, Powerful Simplicity",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -9,9 +9,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PiterWeb/ReverUI.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
   },
   "files": [
     "dist",
