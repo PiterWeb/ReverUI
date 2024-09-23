@@ -13,8 +13,6 @@ export default {
 
 		if (id.endsWith("ts") || id.endsWith("js")) {
 			let newCode =  replaceCustomHooks(code);
-			// newCode = replaceImport(newCode);
-			// console.log(newCode);
 			return {
 				code: newCode,
 				map: null,
@@ -23,10 +21,7 @@ export default {
 
 		if (!id.endsWith("tsx") && !id.endsWith("jsx")) return;
 
-		// const name = getJSXElementName(code);
 		let newCode = replaceSpecialFunctions(code, "this");
-		// newCode = replaceImport(newCode);
-		// console.log(newCode);
 		newCode = replaceSignalHTMLElement(newCode);
 
 		return {
