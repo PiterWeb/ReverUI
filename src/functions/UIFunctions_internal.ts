@@ -70,18 +70,18 @@ export function $useEffect(
 	if (initialized) return;
 
 	// Set initialized as true
-	state.setProp(`effect-${id}`, true)
+	state.setProp(`effect-${id}`, true);
 
 	if (dependencies.length == 0) return callback();
 
 	dependencies.forEach((dependency) => {
 		const keyState = `state-${dependency.id}-${el.__id__}`;
-		const lastKeyState = `last-${keyState}`;
+
+		let lastValue: unknown;
 
 		state.addListener(keyState, (newValue) => {
-			const lastValue = state.getProp(lastKeyState);
-
 			if (newValue === lastValue) return;
+			lastValue = state.getProp(keyState);
 
 			callback();
 		});
