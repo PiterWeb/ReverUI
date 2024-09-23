@@ -20,11 +20,7 @@ export function $useSignal<T>(
 	const keyState = `state-${id}-${el.__id__}`;
 	const lastKeyState = `last-${keyState}`;
 
-	if (state === undefined) {
-		el.__state__ = new StateStore();
-		state = el.__state__;
-		state.setProp(keyState, value);
-	} else if (state.getProp(keyState) === undefined) {
+	if (state.getProp(keyState) === undefined) {
 		state.setProp(keyState, value);
 	} else value = state.getProp(keyState);
 
