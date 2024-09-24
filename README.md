@@ -1,5 +1,7 @@
 # ReverUI
 
+<img src="https://github.com/user-attachments/assets/88fd50a3-bb27-47c5-bdc7-618531ffc75c" alt="reverui-preview" width="500px" height="500px"/>
+
 Effortless UI, Powerful Simplicity
 - 🔥 Similar to React
 - 🔑 TS Native 🔐 (But can be used with JS)
