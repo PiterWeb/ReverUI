@@ -13,17 +13,16 @@ Effortless UI, Powerful Simplicity
 ### Current functionality:
 
 -   [x] React-like JSX
--   [x] useSignal ♻
 -   [x] Good intellisense
+-   [x] useSignal ♻
 -   [x] useEffect (state changes & mounted)
--   [x] Fragments (<> </>) (only work without state)
+-   [] Fragments (<> </>)
 -   [x] Custom Hooks (must start with "$use")
--   [x] Conditional Rendering (ternary operator) ❓
--   [x] List Rendering (array.map) 📜
+-   [x] Conditional Rendering (ternary operator or <$Show when={condition}/>) ❓
+-   [x] Loop Rendering (array.map) 📜
 -   [x] Event Handling (all events in lowercase) <kbd>Click</kbd> <kbd>Key</kbd> ...
--   [x] TailwindCSS ✨
--   [x] Reusable Components 📦
--   [x] Same Statefull Component on the same parent
+-   [x] Compatible with Vite Plugins (TailwindCSS, ...) ✨
+-   [x] Reusable Components (<$Component/>) 📦
 -   [x] Smart Re-rendering 🧠
 
 **The project is built on top of Vite**
