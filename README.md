@@ -1,12 +1,10 @@
 # ReverUI
 
 Effortless UI, Powerful Simplicity
-
-#### 🔥 Simpler than React 👀
-
-#### 🔑 TS Native 🔐
-
-#### ❌ No Virtual DOM 📦
+- 🔥 Similar to React
+- 🔑 TS Native 🔐 (But can be used with JS)
+- ❌ No Virtual DOM 📦
+- ❌ No compiler ⚙
 
 ### Try out [now](https://stackblitz.com/github/PiterWeb/ViteReverUITemplate)
 
