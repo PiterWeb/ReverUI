@@ -1,14 +1,13 @@
 import StateStore from "./StateStore";
 import { IDGenerator } from "./utils/id";
 
-type UIElementArgs = Record<string, any>;
-
+export type UIElementArgs = Record<string, any>;
 
 type children =
 	| (string | number | boolean | HTMLElement)[]
 	| (string | number | boolean | HTMLElement)[][];
 
-export type UIComponent<T extends Record<string, unknown> = UIElementArgs> = (
+export type UIComponent<T extends UIElementArgs = UIElementArgs> = (
 	args: T
 ) => HTMLElement;
 
@@ -25,7 +24,7 @@ export class UIComponentClass {
 		this.elementFn = elementFn;
 	}
 
-	render(args?: UIElementArgs) {
+	render(args?: Parameters<typeof this.elementFn>[0]) {
 		const element = this.elementFn(args ?? {});
 		UI.setId(element, this.__id__);
 		return element;
