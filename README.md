@@ -1,29 +1,28 @@
 # ReverUI
 
+<img src="https://github.com/user-attachments/assets/88fd50a3-bb27-47c5-bdc7-618531ffc75c" alt="reverui-preview" width="500px" height="500px"/>
+
 Effortless UI, Powerful Simplicity
-
-#### 🔥 Simpler than React 👀
-
-#### 🔑 TS Native 🔐
-
-#### ❌ No Virtual DOM 📦
+- 🔥 Similar to React
+- 🔑 TS Native 🔐 (But can be used with JS)
+- ❌ No Virtual DOM 📦
+- ❌ No compiler ⚙
 
 ### Try out [now](https://stackblitz.com/github/PiterWeb/ViteReverUITemplate)
 
 ### Current functionality:
 
 -   [x] React-like JSX
--   [x] useSignal ♻
 -   [x] Good intellisense
+-   [x] useSignal ♻
 -   [x] useEffect (state changes & mounted)
--   [x] Fragments (<> </>) (only work without state)
+-   [] Fragments (<> </>)
 -   [x] Custom Hooks (must start with "$use")
--   [x] Conditional Rendering (ternary operator) ❓
--   [x] List Rendering (array.map) 📜
+-   [x] Conditional Rendering (ternary operator or <$Show when={condition}/>) ❓
+-   [x] Loop Rendering (array.map) 📜
 -   [x] Event Handling (all events in lowercase) <kbd>Click</kbd> <kbd>Key</kbd> ...
--   [x] TailwindCSS ✨
--   [x] Reusable Components 📦
--   [x] Same Statefull Component on the same parent
+-   [x] Compatible with Vite Plugins (TailwindCSS, ...) ✨
+-   [x] Reusable Components (<$Component/>) 📦
 -   [x] Smart Re-rendering 🧠
 
 **The project is built on top of Vite**
