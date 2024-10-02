@@ -12,8 +12,7 @@ export type UIComponent<T extends UIElementArgs = UIElementArgs> = (
 ) => HTMLElement;
 
 export class UIComponentClass {
-
-	static IDGenerator = new IDGenerator()
+	static IDGenerator = new IDGenerator();
 
 	__id__ = UIComponentClass.IDGenerator.generate();
 	__state__: StateStore = new StateStore();
@@ -31,8 +30,12 @@ export class UIComponentClass {
 	}
 }
 
-export function $UI(component: UIComponent, parent?: HTMLElement | null) {
-	UI.HandleStateFull(component as UIComponent, parent);
+export function $UI(
+	component: UIComponent,
+	parent?: HTMLElement | null,
+	replace: boolean = false
+) {
+	UI.HandleStateFull(component as UIComponent, parent, replace);
 }
 
 export default class UI {
@@ -224,7 +227,8 @@ export default class UI {
 
 	public static HandleStateFull(
 		elementFun: UIComponent,
-		parent?: HTMLElement | null
+		parent?: HTMLElement | null,
+		replace: boolean = false
 	) {
 		const component = new UIComponentClass(elementFun);
 		const id = component.__id__;
@@ -233,7 +237,8 @@ export default class UI {
 
 		if (!parent) parent = document.body;
 
-		parent.appendChild(actualElement);
+		if (replace) parent.replaceChildren(actualElement);
+		else parent.appendChild(actualElement);
 
 		component.__state__.addListener("el", (newElement: HTMLElement) => {
 			if (this.getId(newElement) !== id) return;
