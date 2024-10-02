@@ -7,6 +7,7 @@ Effortless UI, Powerful Simplicity
 - 🔑 TS Native 🔐 (But can be used with JS)
 - ❌ No Virtual DOM 📦
 - ❌ No compiler ⚙
+- 📦 [Rever Router](https://github.com/PiterWeb/ReverRouter) (Router for ReverUI)
 
 ### Try out [now](https://stackblitz.com/github/PiterWeb/ViteReverUITemplate)
 
