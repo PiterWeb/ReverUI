@@ -1,5 +1,7 @@
 # ReverUI
 
+![](https://badgen.net/bundlephobia/minzip/reverui)
+
 <img src="https://github.com/user-attachments/assets/88fd50a3-bb27-47c5-bdc7-618531ffc75c" alt="reverui-preview" width="500px" height="500px"/>
 
 Effortless UI, Powerful Simplicity
@@ -7,6 +9,7 @@ Effortless UI, Powerful Simplicity
 - 🔑 TS Native 🔐 (But can be used with JS)
 - ❌ No Virtual DOM 📦
 - ❌ No compiler ⚙
+- 📦 [Rever Router](https://github.com/PiterWeb/ReverRouter) (Router for ReverUI)
 
 ### Try out [now](https://stackblitz.com/github/PiterWeb/ViteReverUITemplate)
 
