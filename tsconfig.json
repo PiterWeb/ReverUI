@@ -24,7 +24,7 @@
     // "moduleDetection": "auto",                        /* Control what method is used to detect module-format JS files. */
     "jsx": "react",
     "jsxFactory": "UI.createElement",
-    "jsxFragmentFactory": "UI.Fragment",                         /* Specify module specifier used to import the JSX factory functions when using 'jsx: react-jsx*'. */
+    "jsxFragmentFactory": "UI.createFragment",                         /* Specify module specifier used to import the JSX factory functions when using 'jsx: react-jsx*'. */
     /* Modules */
     "module": "commonjs",                                /* Specify what module code is generated. */
     // "rootDir": "./",                                  /* Specify the root folder within your source files. */

@@ -10,8 +10,8 @@ export function replaceSignalHTMLElement(code: string) {
 
 	let newCode = code.replaceAll(
 		regex,
-		(_, tagName, options, signal) => {
-			return `UI.createElement(${tagName}, {${options}, ["data-rui-"+${signal}.id]: ${signal}.lastValueStringified, "uid": "${uid}"}, ${signal}.value`
+		(_, tagName: string, options: string, signal: string) => {
+			return `UI.createElement(${tagName}, {${options}, ["data-rui-"+${signal}.id]: ${signal}.lastValueStringified, "data-uid": "${uid}"}, ${signal}.value`
 		}
 	);
 

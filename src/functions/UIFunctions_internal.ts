@@ -32,6 +32,9 @@ export function $useSignal<T>(
 		const newRender = el.render();
 
 		state.setProp("el", newRender);
+
+		// Updates lastValue
+		value = newValue
 	};
 
 	return {

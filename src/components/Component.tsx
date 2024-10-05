@@ -12,12 +12,12 @@ export const $Component = <
 	? {
 			element: T;
 			props?: never; // No se debe pasar `props`
-			ref?: UIComponentClass;
+			ref: UIComponentClass;
 	  }
 	: {
 			element: T;
 			props: P; // `props` es requerido si `element` tiene parámetros
-			ref?: UIComponentClass;
+			ref: UIComponentClass;
 	  }) => {
 	return element.bind(ref)(props ?? ({} as P));
 };

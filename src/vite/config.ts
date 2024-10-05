@@ -14,7 +14,7 @@ export default function configHandler(
 		...config.esbuild,
 		jsxInject: `import {UI} from "reverui";\n`,
 		jsxFactory: "UI.createElement",
-		jsxFragment: "UI.Fragment",
+		jsxFragment: "UI.createFragment",
 		jsxImportSource: "reverui",
 	};
 }

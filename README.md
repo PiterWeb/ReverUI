@@ -16,7 +16,7 @@ Effortless UI, Powerful Simplicity
 -   [x] Good intellisense
 -   [x] useSignal ♻
 -   [x] useEffect (state changes & mounted)
--   [] Fragments (<> </>)
+-   [x] Fragments (<> </>)
 -   [x] Custom Hooks (must start with "$use")
 -   [x] Conditional Rendering (ternary operator or <$Show when={condition}/>) ❓
 -   [x] Loop Rendering (array.map) 📜

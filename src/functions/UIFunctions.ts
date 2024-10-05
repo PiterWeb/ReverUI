@@ -1,4 +1,4 @@
-interface Signal<t> {
+export interface Signal<t> {
 	value: t;
 }
 

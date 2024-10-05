@@ -1,11 +1,12 @@
 import StateStore from "./StateStore";
+import { WritablePart } from "./types";
 import { IDGenerator } from "./utils/id";
 
 export type UIElementArgs = Record<string, any>;
 
 type children =
-	| (string | number | boolean | HTMLElement)[]
-	| (string | number | boolean | HTMLElement)[][];
+	| (string | number | boolean | HTMLElement | DocumentFragment)[]
+	| (string | number | boolean | HTMLElement | DocumentFragment)[][];
 
 export type UIComponent<T extends UIElementArgs = UIElementArgs> = (
 	args: T
@@ -57,23 +58,20 @@ export default class UI {
 			return el;
 		}
 
-		let el = document.createElement(tagName);
-
-		if (tagName === "Fragment")
-			el = new DocumentFragment() as unknown as HTMLElement;
+		const el = document.createElement(tagName);
 
 		if (opts) {
-			const keys = Object.keys(opts);
+			const keys = Object.keys(opts) as (keyof WritablePart<Node>)[];
 
 			for (const key of keys) {
 				if (opts[key] === undefined) continue;
-				// @ts-ignore
+
 				el[key] = opts[key];
 
 				if (
 					el.getAttribute(key) != opts[key] &&
 					!key.startsWith("on") &&
-					key != "className"
+					(key as keyof WritablePart<Element>) != "className"
 				)
 					el.setAttribute(key, opts[key]);
 			}
@@ -84,7 +82,17 @@ export default class UI {
 		return el;
 	}
 
-	private static createChilds(parent: HTMLElement, children: children) {
+	public static createFragment(...children: children) {
+
+		const el = document.createDocumentFragment()
+
+		UI.createChilds(el, children)
+
+		return el
+
+	}
+
+	private static createChilds(parent: HTMLElement | DocumentFragment, children: children) {
 		if (parent === null) return;
 		for (const child of children) {
 			if (typeof child === "string")
@@ -95,14 +103,12 @@ export default class UI {
 
 			if (child instanceof HTMLElement) parent.appendChild(child);
 
-			if (child instanceof DocumentFragment) parent.appendChild(child);
+			if (child instanceof DocumentFragment) parent.appendChild(child)
 
 			// {array.map((el) => {return <div>{el}</div>})
 			if (child instanceof Array) this.createChilds(parent, child);
 		}
 	}
-
-	public static Fragment = "Fragment";
 
 	static setId(el: HTMLElement, id: string) {
 		if (el === null) return;
@@ -130,20 +136,17 @@ export default class UI {
 		// Search actual element in parent, then search for changes in itself and in children recursively
 
 		// If not found, return
-
 		// If found, replace with new element, using replaceWith function
-
-		// console.log(actualElement,newElement)
-
 		for (let i = 0; i < parent.children.length; i++) {
 			const child = parent.children.item(i);
+
 			if (child === null) continue;
+
 			if (
 				child.getAttribute("data-fr-id") ===
 					actualElement.getAttribute("data-fr-id") &&
 				child.tagName === newElement.tagName &&
-				// @ts-ignore
-				child["uid"] === newElement["uid"] &&
+				child.getAttribute("data-uid") === newElement.getAttribute("data-uid") &&
 				child.getAttribute("key") === newElement.getAttribute("key")
 			) {
 				for (let j = 0; j < newElement.attributes.length; j++) {
@@ -151,6 +154,7 @@ export default class UI {
 
 					if (newChildAttribute === null) continue;
 
+					// Element has not signal
 					if (!newChildAttribute.name.startsWith("data-rui-"))
 						continue;
 
@@ -173,7 +177,6 @@ export default class UI {
 				}
 
 				// Search for changes in children recursively
-
 				for (let j = 0; j < child.children.length; j++) {
 					const childChild = child.children.item(j);
 					const newChildChild = newElement.children.item(j);
@@ -191,37 +194,6 @@ export default class UI {
 					newElement
 				);
 			}
-		}
-	}
-
-	private static handleFragmentRerender(
-		parent: HTMLElement,
-		newElement: HTMLElement,
-		id: string
-	) {
-		if (!(newElement instanceof DocumentFragment)) return;
-
-		let firstFragmentChild: Element | null = null;
-
-		for (let i = 0; i < parent.children.length; i++) {
-			const child = parent.children.item(i);
-			if (child === null) continue;
-			if (child.getAttribute("data-fr-id") === id) {
-				parent.insertBefore(newElement, child);
-				firstFragmentChild = child;
-				break;
-			}
-		}
-
-		if (firstFragmentChild === null) return;
-
-		let nextSibling = firstFragmentChild.nextSibling;
-		firstFragmentChild.remove();
-
-		while (nextSibling !== null) {
-			const next = nextSibling.nextSibling;
-			parent.removeChild(nextSibling);
-			nextSibling = next;
 		}
 	}
 
@@ -243,13 +215,10 @@ export default class UI {
 		component.__state__.addListener("el", (newElement: HTMLElement) => {
 			if (this.getId(newElement) !== id) return;
 
-			this.handleFragmentRerender(parent, newElement, id);
-
 			if (!(newElement instanceof DocumentFragment)) {
 				this.smartRerender(parent, actualElement, newElement);
 			}
 
-			//@ts-ignore
 			actualElement = newElement;
 		});
 	}
