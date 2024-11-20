@@ -21,8 +21,8 @@ Effortless UI, Powerful Simplicity
 -   [x] useEffect (state changes & mounted)
 -   [x] Fragments (<> </>)
 -   [x] Custom Hooks (must start with "$use")
--   [x] Conditional Rendering (ternary operator or <$Show when={condition}/>) ❓
--   [x] Loop Rendering (array.map) 📜
+-   [x] Conditional Rendering (<$Show when={condition}/>) ❓
+-   [x] Loop Rendering (<$For each={arr} element={() => {...}}>) 📜
 -   [x] Event Handling (all events in lowercase) <kbd>Click</kbd> <kbd>Key</kbd> ...
 -   [x] Compatible with Vite Plugins (TailwindCSS, ...) ✨
 -   [x] Reusable Components (<$Component/>) 📦
@@ -106,10 +106,9 @@ There is a prepared [Vite template](https://github.com/PiterWeb/ViteReverUITempl
     		<div>
     			<h1>Stateful Component</h1>
     			<p>
-    				{" "}
-    				Counter: {counter.value === 0
-    					? "You didn't click"
-    					: counter.value}{" "}
+                    Counter: 
+                    <Show when={counter.value === 0} element={() => "You didn't click"} />
+                    <Show when={counter.value !== 0} element{() => counter.value} />
     			</p>
     			<button onclick={() => counter.value++}>Increment</button>
     		</div>
