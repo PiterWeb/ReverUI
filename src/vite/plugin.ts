@@ -3,14 +3,17 @@ import {
 	replaceSpecialFunctions,
 	replaceSignalHTMLElement,
 	replaceCustomHooks,
-} from "./transform";
+	replaceComponent,
+} from "./preprocess";
 import configHandler from "./config";
 
 export interface ReverVitePluginOptions {
-	ssr?: boolean
+	ssr?: boolean;
 }
 
-export default function reverPlugin(options: Partial<ReverVitePluginOptions> = {}): PluginOption {
+export default function reverPlugin(
+	_options: Partial<ReverVitePluginOptions> = {}
+): PluginOption {
 	return {
 		name: "reverui-proccessor",
 		transform(code: string, id: string) {
@@ -26,8 +29,11 @@ export default function reverPlugin(options: Partial<ReverVitePluginOptions> = {
 
 			if (!id.endsWith("tsx") && !id.endsWith("jsx")) return;
 
+			console.log(code);
+
 			let newCode = replaceSpecialFunctions(code, "this");
 			newCode = replaceSignalHTMLElement(newCode);
+			newCode = replaceComponent(newCode);
 
 			return {
 				code: newCode,
@@ -38,6 +44,5 @@ export default function reverPlugin(options: Partial<ReverVitePluginOptions> = {
 		config: {
 			handler: configHandler,
 		},
-
-	}
+	};
 }

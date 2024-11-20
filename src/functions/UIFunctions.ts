@@ -9,3 +9,7 @@ export function $useEffect(
 	_callback: () => void,
 	_dependencies: Signal<unknown>[]
 ) {}
+
+// export function $useGlobalSignal<T>(_key: string ,_initvalue: T) {
+// 	return {} as Signal<T>;
+// }

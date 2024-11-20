@@ -12,7 +12,7 @@ export default function configHandler(
 ): handlerReturn {
 	config.esbuild = {
 		...config.esbuild,
-		jsxInject: `import {UI} from "reverui";\n`,
+		jsxInject: `import {UI, $Show, $Component, $For} from "reverui";\n`,
 		jsxFactory: "UI.createElement",
 		jsxFragment: "UI.createFragment",
 		jsxImportSource: "reverui",
