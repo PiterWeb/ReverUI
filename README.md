@@ -1,4 +1,5 @@
 # ReverUI
+<img src="./github/reverui-logo.webp" alt="ReverUI Logo" width="200px" height="200px"/>
 
 ![](https://badgen.net/bundlephobia/minzip/reverui)
 
