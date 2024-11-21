@@ -3,7 +3,7 @@ import {
 	replaceSpecialFunctions,
 	replaceSignalHTMLElement,
 	replaceCustomHooks,
-	replaceComponent,
+	replaceComponentsRef,
 } from "./preprocess";
 import configHandler from "./config";
 
@@ -33,7 +33,7 @@ export default function reverPlugin(
 
 			let newCode = replaceSpecialFunctions(code, "this");
 			newCode = replaceSignalHTMLElement(newCode);
-			newCode = replaceComponent(newCode);
+			newCode = replaceComponentsRef(newCode);
 
 			return {
 				code: newCode,

@@ -38,19 +38,19 @@ export const $For = <
 		lastEach.every((e, i) => JSON.stringify(e) != JSON.stringify(each[i]));
 
 	const lastDataRui = (ref.__state__.getProp(
-		"data-rui-for" + element.toString()
+		"data-rui-for-internal" + element.toString()
 	) ?? ForChangeID) as string;
 
 	if (changes)
 		wrapper.setAttribute(
-			"data-rui-for",
+			"data-rui-for-internal",
 			lastDataRui === ForChangeID ? ForChangeID2 : ForChangeID
 		);
-	else wrapper.setAttribute("data-rui-for", lastDataRui);
+	else wrapper.setAttribute("data-rui-for-internalr", lastDataRui);
 
 	ref.__state__.setProp(
-		"data-rui-for" + element.toString(),
-		wrapper.getAttribute("data-rui-for")
+		"data-rui-for-internal" + element.toString(),
+		wrapper.getAttribute("data-rui-for-internal")
 	);
 
 	ref.__state__.setProp("each-" + element.toString(), each);

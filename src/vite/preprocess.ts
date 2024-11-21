@@ -18,7 +18,7 @@ export function replaceSignalHTMLElement(code: string) {
 	return newCode;
 }
 
-export function replaceComponent(code: string) {
+export function replaceComponentsRef(code: string) {
 	const regex = /(\$Component,\s*{)(\s*)/g;
 
 	let newCode = code.replaceAll(
@@ -28,13 +28,13 @@ export function replaceComponent(code: string) {
 		}
 	);
 
-	newCode = replaceForComponent(newCode);
-	newCode = replaceShowComponent(newCode);
+	newCode = replaceForComponentRef(newCode);
+	newCode = replaceShowComponentRef(newCode);
 
 	return newCode;
 }
 
-function replaceShowComponent(code: string) {
+function replaceShowComponentRef(code: string) {
 	const regex = /(\$Show,\s*{)(\s*)/g;
 
 	let newCode = code.replaceAll(regex, (_, $Show: string, args: string) => {
@@ -44,7 +44,7 @@ function replaceShowComponent(code: string) {
 	return newCode;
 }
 
-function replaceForComponent(code: string) {
+function replaceForComponentRef(code: string) {
 	const regex = /(\$For,\s*{)(\s*)/g;
 
 	let newCode = code.replaceAll(regex, (_, $For: string, args: string) => {
@@ -81,17 +81,30 @@ export function replaceSpecialFunctions(code: string, name: string) {
 
 function replaceSignals(code: string) {
 	let newCode = code.replaceAll("$useSignal", "$useSignal__internal");
+	newCode = newCode.replaceAll("$useDerived", "$useDerived__internal")
 
 	// useSignal
 	// Add id to useSignal
 	const $useSignalSearchRegex =
 		/(\w+)\s*=\s*\$useSignal__internal\s*\(([^)]*)\)\s*/g;
 
+
 	newCode = newCode.replaceAll(
 		$useSignalSearchRegex,
 		(_, name, initiValue) => {
 			const id = INTERNAL_IDGenerator.generate();
 			return `${name} = \$useSignal__internal(${initiValue}, "${name}-${id}");`;
+		}
+	);
+
+	const $useDerivedSearchRegex =
+	/(\w+)\s*=\s*\$useDerived__internal\s*\(([^)]*)\)([^)]*)\)\s*/g;
+
+	newCode = newCode.replaceAll(
+		$useDerivedSearchRegex,
+		(_, name, initiValue, cllbckBody) => {
+			const id = INTERNAL_IDGenerator.generate();
+			return `${name} = \$useDerived__internal(${initiValue})${cllbckBody}, "${name}-${id}");`;
 		}
 	);
 

@@ -1,4 +1,3 @@
-import StateStore from "../StateStore";
 import deepEqual from "../utils/deep_equal";
 import { UIComponentClass } from "../UI";
 
@@ -7,6 +6,23 @@ export interface Signal<t> {
 	readonly id: string;
 	lastValue: () => t;
 	readonly lastValueStringified: string;
+}
+
+export function $useDerived<T, P>(
+	el: UIComponentClass,
+	initSignal: Signal<T>,
+	cllbk: (value: T) => P,
+	id: string
+) {
+
+	const value = initSignal.value
+
+	const signal = $useSignal(el, cllbk(value), id);
+
+	signal.value = cllbk(value)
+
+	return signal
+
 }
 
 export function $useSignal<T>(
@@ -34,7 +50,7 @@ export function $useSignal<T>(
 		state.setProp("el", newRender);
 
 		// Updates lastValue
-		value = newValue
+		value = newValue;
 	};
 
 	return {

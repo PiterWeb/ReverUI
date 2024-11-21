@@ -108,8 +108,8 @@ There is a prepared [Vite template](https://github.com/PiterWeb/ViteReverUITempl
     			<h1>Stateful Component</h1>
     			<p>
                     Counter: 
-                    <Show when={counter.value === 0} element={() => "You didn't click"} />
-                    <Show when={counter.value !== 0} element{() => counter.value} />
+                    <Show when={counter.value === 0} element={() => <span>"You didn't click"</span>} />
+                    <Show when={counter.value !== 0} element{() => <span>counter.value</span>} />
     			</p>
     			<button onclick={() => counter.value++}>Increment</button>
     		</div>

@@ -23,22 +23,22 @@ export const $Show = <T extends UIComponent<{}>>({
 	wrapper.hidden = !when;
 
 	const lastDataRui = (ref.__state__.getProp(
-		"data-rui-show-" + element.toString()
+		"data-rui-show-internal" + element.toString()
 	) ?? ShowID) as string;
 
 	// Triggers smart-render
-	if (wrapper.hidden) wrapper.setAttribute("data-rui-show", "false");
+	if (wrapper.hidden) wrapper.setAttribute("data-rui-show-internal", "false");
 	else {
 		wrapper.style.display = "contents";
 		wrapper.setAttribute(
-			"data-rui-show",
+			"data-rui-show-internal",
 			lastDataRui === ShowID ? ShowID2 : ShowID
 		);
 	}
 
 	ref.__state__.setProp(
-		"data-rui-show-" + element.toString(),
-		wrapper.getAttribute("data-rui-show")
+		"data-rui-show-internal" + element.toString(),
+		wrapper.getAttribute("data-rui-show-internal")
 	);
 
 	wrapper.appendChild(element.bind(ref)({}));
