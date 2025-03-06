@@ -4,7 +4,7 @@ export default function deepEqual(obj1: any, obj2: any) {
         return true;
 
     if(isPrimitive(obj1) && isPrimitive(obj2)) // compare primitives
-        return obj1 === obj2;
+        return false;
 
     if(Object.keys(obj1).length !== Object.keys(obj2).length)
         return false;
