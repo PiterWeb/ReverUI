@@ -4,7 +4,7 @@
   "description": "Effortless UI, Powerful Simplicity",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.cts",
   "homepage": "https://reverui.vercel.app/",
   "repository": {
     "type": "git",
