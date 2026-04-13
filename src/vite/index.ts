@@ -1,1 +1,1 @@
-export { default as ReverVitePlugin, ReverVitePluginOptions } from "./plugin";
+export { default as ReverVitePlugin, type ReverVitePluginOptions } from "./plugin";
