@@ -2,7 +2,7 @@
   "name": "reverui",
   "version": "0.6.1",
   "description": "Effortless UI, Powerful Simplicity",
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "homepage": "https://reverui.vercel.app/",
