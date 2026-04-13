@@ -29,7 +29,7 @@ export default function reverPlugin(
 
 			if (!id.endsWith("tsx") && !id.endsWith("jsx")) return;
 
-			console.log(code);
+			// console.log(code);
 
 			let newCode = replaceSpecialFunctions(code, "this");
 			newCode = replaceSignalHTMLElement(newCode);
